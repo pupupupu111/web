@@ -3,11 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="3; url=index.php">
-    <title>Redirecting...</title>
+    <title>Generate Random File</title>
 </head>
 <body>
-    <h1>Redirecting to index.php...</h1>
-    <p>If you are not redirected, <a href="index.php">click here</a>.</p>
+    <h1>Click to create a random file</h1>
+    <button onclick="createRandomFile()">Create Random File</button>
+
+    <script>
+        function generateRandomString(length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * characters.length);
+                result += characters[randomIndex];
+            }
+            return result;
+        }
+
+        function createRandomFile() {
+            // Generate a random 10-letter filename
+            const randomFileName = generateRandomString(10) + '.txt';
+
+            // Create the content of the file
+            const fileContent = "This is a file with a random name.";
+
+            // Create a Blob object with the file content
+            const blob = new Blob([fileContent], { type: 'text/plain' });
+
+            // Create a link to download the file
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = randomFileName;
+
+            // Trigger the download
+            link.click();
+        }
+    </script>
 </body>
 </html>
